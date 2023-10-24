@@ -9,23 +9,18 @@ class DetailMovieActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMovieBinding
 
     companion object {
-        const val EXTRA_ID = "extra_id"
+        const val MOVIE_NAME = "movieName"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val id = intent.getStringExtra(EXTRA_ID).orEmpty()
-        getMovieDetail(id)
+        val name = intent.getStringExtra(MOVIE_NAME).orEmpty()
+        // getMovieDetail(name)
     }
 
-    private fun getMovieDetail(id: String) {
-
-      //  binding.ivDetailMovie =
-      //  binding.tvDetailMovie =
-       // binding.tvDetailDescriptionMovie =
-
-    }
+    // private fun getMovieDetail(name: String) {
+    //     binding.tvDetailMovie.text = getString(name.toInt())
+    // }
 }
