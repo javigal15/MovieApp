@@ -1,24 +1,34 @@
 package com.example.movieapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.ApiService.ApiService
+import com.example.movieapp.ApiService.MoviesDataResponse
 import com.example.movieapp.adapter.MovieAdapter
-
-import com.example.movieapp.provider.movieProvider
 import com.example.movieapp.databinding.ActivityMainBinding
-import com.example.movieapp.provider.movieList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: MovieAdapter
+    private lateinit var retrofit: Retrofit
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        adapter = MovieAdapter(emptyList())
+        getMovies()
         initUI()
     }
 
@@ -28,15 +38,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         binding.rvMovies.layoutManager = LinearLayoutManager(this)
-        binding.rvMovies.adapter =
-            MovieAdapter(movieProvider.myMovieList) { onItemSelected(movieList.Javi) }
+        binding.rvMovies.adapter = adapter
     }
 
-    private fun onItemSelected(movieList: movieList.Javi) {
-        val intent = Intent(this, DetailMovieActivity::class.java)
-        intent.putExtra("MOVIE_NAME", movieList.name)
-        startActivity(intent)
+    private fun getMovies() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val retrofit = getRetrofit()
+            val myResponse = retrofit.create(ApiService::class.java).getMoviesName()
+            Log.i("javi1", "aca llego")
+            if (myResponse.isSuccessful) {
+                val response: MoviesDataResponse? = myResponse.body()
+                if (response != null) {
+                    runOnUiThread {
+                        adapter.updateList(response.results)
+                        binding.rvMovies.adapter = adapter
+                    }
+                }
+            } else {
+                Log.i("Javi", "llego aca 2")
+            }
+        }
     }
 
 
-}
+    private fun getRetrofit(): Retrofit {
+
+        retrofit = Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/discover/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().addInterceptor { chain ->
+                val request = chain.request().newBuilder().addHeader("accept", "application/json")
+                    .addHeader(
+                        "Authorization",
+                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjRlZjZhYWVhYWI4ZjE2NDkwZDM3NzgzYzYwY2M0YSIsInN1YiI6IjY1Mzg1MDc0OWMyNGZjMDEyNjU2NzI1MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NyBfq3p6GMi2tE4HQc_jSq_UtyMIe683PPu771dcjMU"
+                    )
+                    .build()
+                chain.proceed(request)
+            }.build()).build()
+        return retrofit
+    }
+ }
