@@ -11,12 +11,24 @@
         android:id="@+id/vMovies"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:background="#0641D5"
+        android:background="#020B22"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </View>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCatalog"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/sMovie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vMovies">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +43,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/vMovies" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCatalog">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <LinearLayout
+        android:id="@+id/llayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sMovie">
+
+        <Button
+            android:id="@+id/btnAdult"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#816204"
+            android:text="@string/Adult">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#816204"
+            android:text="@string/Order">
+
+        </Button>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/rvMovies"
@@ -40,7 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vMovies">
+        app:layout_constraintTop_toBottomOf="@+id/llayout">
 
     </androidx.recyclerview.widget.RecyclerView>
 

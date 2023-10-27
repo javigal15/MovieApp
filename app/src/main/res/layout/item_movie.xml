@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="10dp"
-        android:backgroundTint="#B90F24AA"
+        android:backgroundTint="#020B22"
         app:cardCornerRadius="16dp">
 
         <TextView

@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">MovieApp</string>
 
-    <string name="Javi">Javi</string>
-    <string name="Dani">Dani</string>
+    <string name="Order">Order A-Z</string>
+    <string name="Adult">Only Adult</string>
 
-    <string name="Desc1">Prueba1</string>
-    <string name="Desc2">Prueba2</string>
 </resources>

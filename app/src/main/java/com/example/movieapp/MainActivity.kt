@@ -38,8 +38,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        binding.rvMovies.layoutManager = GridLayoutManager(this, 2)
+        binding.rvMovies.layoutManager = LinearLayoutManager(this)
         binding.rvMovies.adapter = adapter
+        binding.rvCatalog.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCatalog.adapter = adapter
     }
 
     private fun getMovies() {
@@ -55,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.i("Javi", "Hay algun error")
+                Log.i("Javi", "error")
             }
         }
     }
