@@ -7,10 +7,11 @@ data class MoviesDataResponse(
 )
 
 data class MovieItemResponse(
-    //@SerializedName("_id") val movieId: Int,
+    @SerializedName("id") val movieId: String,
     @SerializedName("original_title") val title: String,
-    //@SerializedName("poster_path") val imageFront: String
-)
+    @SerializedName("poster_path") var poster_path: String,
+
+    )
 
 data class MovieDataResponse(
     @SerializedName("movie") val movie: MovieItemResponse

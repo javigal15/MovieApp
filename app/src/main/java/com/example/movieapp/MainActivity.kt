@@ -3,6 +3,7 @@ package com.example.movieapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.ApiService.ApiService
 import com.example.movieapp.ApiService.MoviesDataResponse
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        binding.rvMovies.layoutManager = LinearLayoutManager(this)
+        binding.rvMovies.layoutManager = GridLayoutManager(this, 2)
         binding.rvMovies.adapter = adapter
     }
 
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val retrofit = getRetrofit()
             val myResponse = retrofit.create(ApiService::class.java).getMoviesName()
-            Log.i("javi1", "aca llego")
             if (myResponse.isSuccessful) {
                 val response: MoviesDataResponse? = myResponse.body()
                 if (response != null) {
@@ -55,11 +55,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.i("Javi", "llego aca 2")
+                Log.i("Javi", "Hay algun error")
             }
         }
     }
-
 
     private fun getRetrofit(): Retrofit {
 
@@ -77,4 +76,4 @@ class MainActivity : AppCompatActivity() {
             }.build()).build()
         return retrofit
     }
- }
+}
