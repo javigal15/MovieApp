@@ -13,11 +13,6 @@ class MovieAdapter(
 ) :
     RecyclerView.Adapter<movieViewHolder>() {
 
-    fun updateList(movieList: List<MovieItemResponse>) {
-        this.movieList = movieList
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): movieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
         return movieViewHolder(view)
@@ -29,5 +24,15 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: movieViewHolder, position: Int) {
         holder.render(movieList[position])
+    }
+
+    fun updateList(movieList: List<MovieItemResponse>, orderBy: String? = null) {
+        this.movieList = when (orderBy) {
+            "title" -> movieList.sortedBy { it.title }
+            "popularity" -> movieList.sortedBy { it.popularity }
+            "date" -> movieList.sortedBy { it.date }
+            else -> movieList
+        }
+        notifyDataSetChanged()
     }
 }

@@ -64,15 +64,14 @@
         app:layout_constraintTop_toBottomOf="@+id/sMovie">
 
         <Button
-            android:id="@+id/btnAdult"
+            android:id="@+id/btnPopularity"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:backgroundTint="#816204"
-            android:text="@string/Adult">
+            android:text="@string/Popularity">
 
         </Button>
 
@@ -85,6 +84,18 @@
             android:layout_weight="1"
             android:backgroundTint="#816204"
             android:text="@string/Order">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnNewest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#816204"
+            android:text="@string/Newest">
 
         </Button>
 
@@ -101,7 +112,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llayout">
 
+
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llayout">
+
+    </ProgressBar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

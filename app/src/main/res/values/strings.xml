@@ -2,6 +2,6 @@
     <string name="app_name">MovieApp</string>
 
     <string name="Order">Order A-Z</string>
-    <string name="Adult">Only Adult</string>
-
+    <string name="Popularity">Popularity</string>
+    <string name="Newest">Newest</string>
 </resources>
