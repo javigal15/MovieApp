@@ -1,4 +1,4 @@
-package com.example.movieapp.ApiService
+package com.example.movieapp.provider
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,14 +7,12 @@ data class MoviesDataResponse(
 )
 
 data class MovieItemResponse(
-    @SerializedName("id") val movieId: String,
+    @SerializedName("id") val id: String,
     @SerializedName("original_title") val title: String,
-    @SerializedName("poster_path") var poster_path: String,
+    @SerializedName("poster_path") val posterPath: String,
     @SerializedName("popularity") val popularity: String,
-    @SerializedName("release_Date") val date: String
+    @SerializedName("release_Date") val date: String,
 )
 
-data class MovieDataResponse(
-    @SerializedName("movie") val movie: MovieItemResponse
-)
+
 

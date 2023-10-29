@@ -3,13 +3,14 @@ package com.example.movieapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.ApiService.MovieItemResponse
+import com.example.movieapp.provider.MovieItemResponse
 import com.example.movieapp.R
 import com.example.movieapp.viewHolder.movieViewHolder
 
 
 class MovieAdapter(
-    private var movieList: List<MovieItemResponse>
+    var movieList: List<MovieItemResponse> = emptyList(),
+    private val onItemSelected: (String) -> Unit
 ) :
     RecyclerView.Adapter<movieViewHolder>() {
 
@@ -23,13 +24,13 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: movieViewHolder, position: Int) {
-        holder.render(movieList[position])
+        holder.render(movieList[position], onItemSelected)
     }
 
     fun updateList(movieList: List<MovieItemResponse>, orderBy: String? = null) {
         this.movieList = when (orderBy) {
             "title" -> movieList.sortedBy { it.title }
-            "popularity" -> movieList.sortedBy { it.popularity }
+            "popularity" -> movieList.sortedBy { it.popularity.toDouble() }
             "date" -> movieList.sortedBy { it.date }
             else -> movieList
         }

@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.ApiService.ApiService
-import com.example.movieapp.ApiService.MoviesDataResponse
+import com.example.movieapp.provider.MoviesDataResponse
 import com.example.movieapp.adapter.MovieAdapter
 import com.example.movieapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        adapter = MovieAdapter(emptyList())
         initUI()
     }
 
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
+        adapter = MovieAdapter { navigateToDetail(it) }
         binding.rvMovies.layoutManager = LinearLayoutManager(this)
         binding.rvMovies.adapter = adapter
         binding.rvCatalog.layoutManager =
@@ -70,7 +71,13 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-        }) // FALTA ESTO
+        })
+    }
+
+    private fun navigateToDetail(id: String) {
+        val intent = Intent(this, DetailMovieActivity::class.java)
+        intent.putExtra("EXTRA_ID", id)
+        startActivity(intent)
     }
 
     private fun getRetrofit(): Retrofit {
@@ -103,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     adapter.updateList(response.results, orderBy)
                     binding.progressBar.isVisible = false
-                    binding.rvMovies.adapter = adapter
+                    //binding.rvMovies.adapter = adapter
                 }
             } else {
                 Log.i("Javi", "Error al ordenar")
@@ -122,15 +129,13 @@ class MainActivity : AppCompatActivity() {
                     runOnUiThread {
                         adapter.updateList(response.results)
                         binding.progressBar.isVisible = false
-                        binding.rvMovies.adapter = adapter
                     }
                 } else {
                     Log.i("javi", "no anda")
                 }
             }
         }
-    } // FALTA VER ESTO
-
+    }
 
 
 }
