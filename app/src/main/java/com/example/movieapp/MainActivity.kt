@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.ApiService.ApiService
+import com.example.movieapp.adapter.CarteleraAdapter
 import com.example.movieapp.provider.MoviesDataResponse
 import com.example.movieapp.adapter.MovieAdapter
 import com.example.movieapp.databinding.ActivityMainBinding
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MovieAdapter
+    private lateinit var adapterCartelera: CarteleraAdapter
     private lateinit var retrofit: Retrofit
 
 
@@ -47,15 +50,19 @@ class MainActivity : AppCompatActivity() {
     private fun initResponse() {
         CoroutineScope(Dispatchers.IO).launch { getResponse() }
         orderMovies("")
+        orderCatalog("popularity")
     }
 
     private fun initRecyclerView() {
         adapter = MovieAdapter { navigateToDetail(it) }
+        adapterCartelera = CarteleraAdapter { navigateToDetail(it) }
+
         binding.rvMovies.layoutManager = LinearLayoutManager(this)
         binding.rvMovies.adapter = adapter
+
         binding.rvCatalog.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvCatalog.adapter = adapter
+        binding.rvCatalog.adapter = adapterCartelera
     }
 
     private fun initListeners() {
@@ -110,7 +117,21 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     adapter.updateList(response.results, orderBy)
                     binding.progressBar.isVisible = false
-                    //binding.rvMovies.adapter = adapter
+                }
+            } else {
+                Log.i("Javi", "Error al ordenar")
+            }
+        }
+    }
+
+    private fun orderCatalog(orderBy: String) {
+        binding.progressBar.isVisible = true
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = getResponse()
+            if (response != null) {
+                runOnUiThread {
+                    adapterCartelera.updateList(response.results, orderBy)
+                    binding.progressBar.isVisible = false
                 }
             } else {
                 Log.i("Javi", "Error al ordenar")

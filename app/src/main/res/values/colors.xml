@@ -5,6 +5,7 @@
 
     <color name="primaryColor">#020B22</color>
     <color name="secundaryColor">#EE5A0A</color>
+    <color name="thirdColor">#B6663A</color>
 
     <color name="starsColor">#FFD700</color>
     <color name="emptyStarsColor">#C0C0C0</color>

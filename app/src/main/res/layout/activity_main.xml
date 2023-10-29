@@ -10,7 +10,7 @@
     <View
         android:id="@+id/vMovies"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCatalog"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="180dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/sMovie"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Best Movies Here!"
+        android:text="@string/title"
         android:textColor="@color/white"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -59,7 +59,6 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sMovie">
 

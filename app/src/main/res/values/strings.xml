@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MovieApp</string>
 
+    <string name="title">Best Movies Here!</string>
+
     <string name="Order">Order A-Z</string>
     <string name="Popularity">Popularity</string>
     <string name="Newest">Newest</string>
