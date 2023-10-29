@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.provider.MovieItemResponse
 import com.example.movieapp.R
 import com.example.movieapp.viewHolder.movieViewHolder
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class MovieAdapter(
@@ -28,9 +30,10 @@ class MovieAdapter(
     }
 
     fun updateList(movieList: List<MovieItemResponse>, orderBy: String? = null) {
+
         this.movieList = when (orderBy) {
             "title" -> movieList.sortedBy { it.title }
-            "popularity" -> movieList.sortedBy { it.popularity.toDouble() }
+            "popularity" -> movieList.sortedByDescending { it.popularity.toDouble() }
             "date" -> movieList.sortedBy { it.date }
             else -> movieList
         }

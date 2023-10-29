@@ -11,7 +11,7 @@
         android:id="@+id/vMovies"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:background="#020B22"
+        android:background="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -70,7 +70,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#816204"
+            android:backgroundTint="@color/secundaryColor"
             android:text="@string/Popularity">
 
         </Button>
@@ -82,7 +82,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#816204"
+            android:backgroundTint="@color/secundaryColor"
             android:text="@string/Order">
 
         </Button>
@@ -94,7 +94,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#816204"
+            android:backgroundTint="@color/secundaryColor"
             android:text="@string/Newest">
 
         </Button>

@@ -53,8 +53,12 @@ class DetailMovieActivity : AppCompatActivity() {
             val title = myResponse.title
             val description = myResponse.description
             val backDropPath = myResponse.backdropPath
+            val rating = myResponse.voteAverage.toDouble()
+            val ratingStars = rating*0.5
+
             runOnUiThread {
                 binding.tvDetailMovie.text = title
+                binding.ratingBar.rating = ratingStars.toFloat()
                 binding.tvDetailDescriptionMovie.text = description
                 val baseUrl = "https://image.tmdb.org/t/p/w500"
                 val backdrop = backDropPath
@@ -64,6 +68,4 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }
