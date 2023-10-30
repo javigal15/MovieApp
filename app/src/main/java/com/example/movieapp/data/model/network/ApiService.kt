@@ -5,6 +5,7 @@ import com.example.movieapp.data.model.MoviesDataResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import javax.inject.Singleton
 
 
 interface ApiService {
@@ -12,7 +13,7 @@ interface ApiService {
     @GET("search/movie")
     suspend fun getMoviesSpecificName(
         @Query("query") movieSpecificName: String,
-        @Query("year") movieSpecificYear: String?
+        // @Query("year") movieSpecificYear: String?
     ): retrofit2.Response<MoviesDataResponse>
 
     @GET("discover/movie")

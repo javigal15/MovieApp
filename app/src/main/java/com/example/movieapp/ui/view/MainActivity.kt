@@ -7,15 +7,17 @@ import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.core.NetworkModule.provideRetrofit
 import com.example.movieapp.data.model.network.ApiService
-import com.example.movieapp.core.RetrofitHelper
 import com.example.movieapp.ui.viewModel.adapter.CarteleraAdapter
 import com.example.movieapp.ui.viewModel.adapter.MovieAdapter
 import com.example.movieapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        orderMovies("")
+        orderMovies("", null)
         adapter = MovieAdapter { navigateToDetail(it) }
         adapterCartelera = CarteleraAdapter { navigateToDetail(it) }
         binding.rvMovies.adapter = adapter
@@ -47,12 +49,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.btnPopularity.setOnClickListener { orderMovies("popularity") }
-        binding.btnOrder.setOnClickListener { orderMovies("title") }
-        binding.btnNewest.setOnClickListener { orderMovies("date") }
+        binding.btnPopularity.setOnClickListener { orderMovies("popularity", null) }
+        binding.btnOrder.setOnClickListener { orderMovies("title", null) }
+        binding.btnNewest.setOnClickListener { orderMovies("date", null) }
         binding.sMovie.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchMovie(query.orEmpty())
+                orderMovies("", query.orEmpty())
                 return false
             }
 
@@ -68,38 +70,31 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun orderMovies(orderBy: String) {
+    private fun orderMovies(orderBy: String, query: String?) {
         binding.progressBar.isVisible = true
         CoroutineScope(Dispatchers.IO).launch {
             val response =
-                RetrofitHelper.getRetrofit().create(ApiService::class.java).getMoviesName().body()
-            if (response != null) {
-                runOnUiThread {
-                    adapterCartelera.updateList(response.results, "popularity")
-                    adapter.updateList(response.results, orderBy)
-                    binding.progressBar.isVisible = false
+                provideRetrofit().create(ApiService::class.java).getMoviesName().body()
+            if (query != null) {
+                val searchResponse = provideRetrofit().create(ApiService::class.java)
+                    .getMoviesSpecificName(query).body()
+                if (searchResponse != null) {
+                    runOnUiThread {
+                        adapter.updateList(searchResponse.results)
+                        binding.progressBar.isVisible = false
+                    }
                 }
             } else {
-                Log.i("Javi", "Error al ordenar")
+                if (response != null) {
+                    runOnUiThread {
+                        adapterCartelera.updateList(response.results, "popularity")
+                        adapter.updateList(response.results, orderBy)
+                        binding.progressBar.isVisible = false
+                    }
+                } else {
+                    Log.i("Javi", "Error al ordenar")
+                }
             }
         }
     }
-
-    private fun searchMovie(query: String, year: String? = null) {
-        binding.progressBar.isVisible = true
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitHelper.getRetrofit().create(ApiService::class.java)
-                .getMoviesSpecificName(query, year).body()
-            if (response != null) {
-                runOnUiThread {
-                    adapter.updateList(response.results)
-                    binding.progressBar.isVisible = false
-                }
-            } else {
-                Log.i("javi", "no anda el buscador")
-            }
-
-        }
-    }
-
 }

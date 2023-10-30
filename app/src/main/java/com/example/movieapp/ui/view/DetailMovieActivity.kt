@@ -2,14 +2,16 @@ package com.example.movieapp.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.movieapp.core.NetworkModule
 import com.example.movieapp.data.model.network.ApiService
-import com.example.movieapp.core.RetrofitHelper
 import com.example.movieapp.databinding.ActivityDetailMovieBinding
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailMovieBinding
@@ -29,7 +31,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun getMovieDetail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val myResponse =
-                RetrofitHelper.getRetrofit().create(ApiService::class.java).getMovieDetail(id)
+                NetworkModule.provideRetrofit().create(ApiService::class.java).getMovieDetail(id)
             runOnUiThread {
                 binding.tvDetailMovie.text = myResponse.title
                 binding.ratingBar.rating = (myResponse.voteAverage.toDouble() * 0.5).toFloat()
