@@ -1,8 +1,9 @@
-package com.example.movieapp
+package com.example.movieapp.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.movieapp.ApiService.ApiService
+import com.example.movieapp.data.model.network.ApiService
+import com.example.movieapp.core.RetrofitHelper
 import com.example.movieapp.databinding.ActivityDetailMovieBinding
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope

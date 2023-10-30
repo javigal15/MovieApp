@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.core
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,30 +1,29 @@
-package com.example.movieapp.adapter
+package com.example.movieapp.ui.viewModel.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.data.model.MovieItemResponse
 import com.example.movieapp.R
-import com.example.movieapp.provider.MovieItemResponse
-import com.example.movieapp.viewHolder.carteleraViewHolder
+import com.example.movieapp.ui.viewModel.viewHolder.movieViewHolder
 
 
-class CarteleraAdapter(
+class MovieAdapter(
     var movieList: List<MovieItemResponse> = emptyList(),
     private val onItemSelected: (String) -> Unit
 ) :
-    RecyclerView.Adapter<carteleraViewHolder>() {
+    RecyclerView.Adapter<movieViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): carteleraViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_cartelera, parent, false)
-        return carteleraViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): movieViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        return movieViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return movieList.size
     }
 
-    override fun onBindViewHolder(holder: carteleraViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: movieViewHolder, position: Int) {
         holder.render(movieList[position], onItemSelected)
     }
 

@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.ui.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +7,10 @@ import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieapp.ApiService.ApiService
-import com.example.movieapp.adapter.CarteleraAdapter
-import com.example.movieapp.adapter.MovieAdapter
+import com.example.movieapp.data.model.network.ApiService
+import com.example.movieapp.core.RetrofitHelper
+import com.example.movieapp.ui.viewModel.adapter.CarteleraAdapter
+import com.example.movieapp.ui.viewModel.adapter.MovieAdapter
 import com.example.movieapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
